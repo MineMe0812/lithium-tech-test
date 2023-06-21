@@ -44,7 +44,7 @@ export async function signin (req:any, res:any) {
         );
 
         if (!passwordIsValid) {
-            return res.status(401).send({ message: "Invalid Password!" });
+            return res.status(401).send({ accessToken: null, message: "Invalid Password!" });
         }
     
         var token = jwt.sign({ id: user._id }, COOKIE_SECRET, {
@@ -55,7 +55,8 @@ export async function signin (req:any, res:any) {
         res.status(200).send({
             id: user._id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            accessToken: token
         });
     } catch (error) {
         res.status(400).send(error.message);
