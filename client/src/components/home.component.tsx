@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Link, Navigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import IUser from "../types/user.type";
+import { ToastContainer, toast } from "react-toastify";
 
 type Props = {};
 
@@ -32,6 +33,7 @@ export default class Home extends Component<Props, State> {
     AuthService.logout();
     this.setState({
       currentUser: { accessToken: "" },
+      redirect: "/login"
     });
   }
 
@@ -44,57 +46,15 @@ export default class Home extends Component<Props, State> {
 
     return (
       <>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">
-            bezKoder
-          </Link>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
-                Home
-              </Link>
-            </li>
-          </div>
-
-          <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
-                {currentUser.username}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={this.logOut}>
-                LogOut
-              </a>
-            </li>
-          </div>
-        </nav>
-        <div className="container">
-          {(this.state.userReady) ?
-            <div>
-              <header className="jumbotron">
-                <h3>
-                  <strong>{currentUser.username}</strong> Profile
-                </h3>
-              </header>
-              <p>
-                <strong>Token:</strong>{" "}
-                {currentUser.accessToken.substring(0, 20)} ...{" "}
-                {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-              </p>
-              <p>
-                <strong>Id:</strong>{" "}
-                {currentUser.id}
-              </p>
-              <p>
-                <strong>Email:</strong>{" "}
-                {currentUser.email}
-              </p>
-              <strong>Authorities:</strong>
-              
-            </div> : null}
-        </div>
-      </>
+      <div className="home_page">
+        <h4>
+          {" "}
+          Welcome <span>{currentUser.username}</span>
+        </h4>
+        <button onClick={this.logOut}>LOGOUT</button>
+      </div>
+      <ToastContainer />
+    </>
       
     );
   }

@@ -28,7 +28,7 @@ connectToDatabase(ATLAS_URI)
         })
       );
 
-      //app.use(express.static(path.join(__dirname, './client')));
+      app.use(express.static(path.join(__dirname, '../client')));
 
        app.use(express.json());
        app.use(express.urlencoded({ extended: true }));
@@ -44,13 +44,11 @@ connectToDatabase(ATLAS_URI)
        // define all router
        indexRouter(app);
 
-      //  app.get('/', (req, res) => {
-      //       res.sendFile(path.join(__dirname, './client/index.html'));
-      //   });
+       app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../client/index.html'));
+        });
 
-       app.get("/", (req, res) => {
-            res.json({ message: "Welcome to Julian application." });
-       });
+  
        
        // start the Express server
        app.listen(PROT, () => {

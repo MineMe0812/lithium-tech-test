@@ -9,11 +9,11 @@ import AuthService from "../services/auth.service";
 type Props = {};
 
 type State = {
+  redirect: string | null,
   username: string,
   email: string,
   password: string,
   successful: boolean,
-  redirect: string | null,
   message: string
 };
 
@@ -23,11 +23,11 @@ export default class Register extends Component<Props, State> {
     this.handleRegister = this.handleRegister.bind(this);
 
     this.state = {
+      redirect: null,
       username: "",
       email: "",
       password: "",
       successful: false,
-      redirect: null,
       message: ""
     };
   }
@@ -74,16 +74,11 @@ export default class Register extends Component<Props, State> {
       password
     ).then(
       response => {
-        // this.setState({
-        //   message: response.data.message,
-        //   successful: true
-        // });
 
         toast.success('Success Register', {
           position: "bottom-left",
         });
         this.setState({ redirect: "/login" });
-
       },
       error => {
         const resMessage =
@@ -93,10 +88,6 @@ export default class Register extends Component<Props, State> {
           error.message ||
           error.toString();
 
-        // this.setState({
-        //   successful: false,
-        //   message: resMessage
-        // });
         toast.error(resMessage, {
           position: "bottom-left",
         });
@@ -108,7 +99,7 @@ export default class Register extends Component<Props, State> {
     if (this.state.redirect) {
       return <Navigate to={this.state.redirect} />
     }
-    const { successful, message } = this.state;
+
 
     const initialValues = {
       username: "",
